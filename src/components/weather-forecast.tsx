@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { ArrowDown, ArrowUp, Droplets, Wind } from "lucide-react";
+import { ArrowDown, ArrowUp, Droplets, Umbrella, Wind } from "lucide-react";
 import { format } from "date-fns";
 import type { ForecastData } from "@/api/types";
 
@@ -13,6 +13,7 @@ interface DailyForecast {
   temp_max: number;
   humidity: number;
   wind: number;
+  precipitationChance: number;
   weather: {
     id: number;
     main: string;
@@ -32,12 +33,17 @@ export function WeatherForecast({ data }: WeatherForecastProps) {
         temp_max: forecast.main.temp_max,
         humidity: forecast.main.humidity,
         wind: forecast.wind.speed,
+        precipitationChance: forecast.pop,
         weather: forecast.weather[0],
         date: forecast.dt,
       };
     } else {
       acc[date].temp_min = Math.min(acc[date].temp_min, forecast.main.temp_min);
       acc[date].temp_max = Math.max(acc[date].temp_max, forecast.main.temp_max);
+      acc[date].precipitationChance = Math.max(
+        acc[date].precipitationChance,
+        forecast.pop
+      );
     }
 
     return acc;
@@ -50,19 +56,19 @@ export function WeatherForecast({ data }: WeatherForecastProps) {
   const formatTemp = (temp: number) => `${Math.round(temp)}°`;
 
   return (
-    <Card>
+    <Card className="border-white/10 bg-white/5 backdrop-blur-xl">
       <CardHeader>
-        <CardTitle>5-Day Forecast</CardTitle>
+        <CardTitle>5-Day Outlook</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid gap-4">
           {nextDays.map((day) => (
             <div
               key={day.date}
-              className="grid grid-cols-3 items-center gap-4 rounded-lg border p-4"
+              className="grid items-center gap-4 rounded-xl border border-white/10 bg-black/20 p-4 md:grid-cols-[1.5fr_1fr_1fr]"
             >
               <div>
-                <p className="font-medium">
+                <p className="font-medium text-base">
                   {format(new Date(day.date * 1000), "EEE, MMM d")}
                 </p>
                 <p className="text-sm text-muted-foreground capitalize">
@@ -70,7 +76,7 @@ export function WeatherForecast({ data }: WeatherForecastProps) {
                 </p>
               </div>
 
-              <div className="flex justify-center gap-4">
+              <div className="flex gap-4 md:justify-center">
                 <span className="flex items-center text-blue-500">
                   <ArrowDown className="mr-1 h-4 w-4" />
                   {formatTemp(day.temp_min)}
@@ -81,7 +87,7 @@ export function WeatherForecast({ data }: WeatherForecastProps) {
                 </span>
               </div>
 
-              <div className="flex justify-end gap-4">
+              <div className="flex gap-4 md:justify-end">
                 <span className="flex items-center gap-1">
                   <Droplets className="h-4 w-4 text-blue-500" />
                   <span className="text-sm">{day.humidity}%</span>
@@ -89,6 +95,12 @@ export function WeatherForecast({ data }: WeatherForecastProps) {
                 <span className="flex items-center gap-1">
                   <Wind className="h-4 w-4 text-blue-500" />
                   <span className="text-sm">{day.wind}m/s</span>
+                </span>
+                <span className="flex items-center gap-1">
+                  <Umbrella className="h-4 w-4 text-blue-500" />
+                  <span className="text-sm">
+                    {Math.round(day.precipitationChance * 100)}%
+                  </span>
                 </span>
               </div>
             </div>

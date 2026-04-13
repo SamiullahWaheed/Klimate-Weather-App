@@ -32,7 +32,7 @@ function FavoriteCityTablet({
   return (
     <div
       onClick={handleClick}
-      className="relative flex min-w-[250px] cursor-pointer items-center gap-3 rounded-lg border bg-card p-4 pr-8 shadow-sm transition-all hover:shadow-md"
+      className="relative flex min-w-[260px] cursor-pointer items-center gap-3 rounded-xl border border-white/10 bg-white/5 p-4 pr-8 shadow-sm backdrop-blur-xl transition-all hover:-translate-y-0.5 hover:bg-white/10"
       role="button"
       tabIndex={0}
     >
@@ -91,7 +91,7 @@ export function FavoriteCities() {
 
   return (
     <>
-      <h1 className="text-xl font-bold tracking-tight">Favorites</h1>
+      <h1 className="text-xl font-semibold tracking-tight">Saved Cities</h1>
       <ScrollArea className="w-full pb-4">
         <div className="flex gap-4">
           {favorites.map((city) => (

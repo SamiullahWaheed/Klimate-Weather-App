@@ -22,6 +22,7 @@ export interface WeatherCondition {
 export interface WeatherData {
   coord: Coordinates;
   weather: WeatherCondition[];
+  visibility: number;
   main: {
     temp: number;
     feels_like: number;
@@ -29,10 +30,24 @@ export interface WeatherData {
     temp_max: number;
     pressure: number;
     humidity: number;
+    sea_level?: number;
+    grnd_level?: number;
   };
   wind: {
     speed: number;
     deg: number;
+    gust?: number;
+  };
+  clouds: {
+    all: number;
+  };
+  rain?: {
+    "1h"?: number;
+    "3h"?: number;
+  };
+  snow?: {
+    "1h"?: number;
+    "3h"?: number;
   };
   sys: {
     sunrise: number;
@@ -49,6 +64,11 @@ export interface ForecastData {
     main: WeatherData["main"];
     weather: WeatherData["weather"];
     wind: WeatherData["wind"];
+    visibility: number;
+    clouds: WeatherData["clouds"];
+    pop: number;
+    rain?: WeatherData["rain"];
+    snow?: WeatherData["snow"];
     dt_txt: string;
   }>;
   city: {

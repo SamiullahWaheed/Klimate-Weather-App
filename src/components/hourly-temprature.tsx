@@ -32,23 +32,23 @@ export function HourlyTemperature({ data }: HourlyTemperatureProps) {
     }));
 
   return (
-    <Card className="flex-1">
+    <Card className="flex-1 border-white/10 bg-white/5 backdrop-blur-xl">
       <CardHeader>
-        <CardTitle>Today's Temperature</CardTitle>
+        <CardTitle>24-Hour Trend</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="h-[200px] w-full">
+        <div className="h-[220px] w-full">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={chartData}>
               <XAxis
                 dataKey="time"
-                stroke="#888888"
+                stroke="#94a3b8"
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
               />
               <YAxis
-                stroke="#888888"
+                stroke="#94a3b8"
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
@@ -83,17 +83,23 @@ export function HourlyTemperature({ data }: HourlyTemperatureProps) {
                   return null;
                 }}
               />
+              <defs>
+                <linearGradient id="tempGlow" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#22d3ee" />
+                  <stop offset="100%" stopColor="#6366f1" />
+                </linearGradient>
+              </defs>
               <Line
                 type="monotone"
                 dataKey="temp"
-                stroke="#2563eb"
-                strokeWidth={2}
+                stroke="url(#tempGlow)"
+                strokeWidth={3}
                 dot={false}
               />
               <Line
                 type="monotone"
                 dataKey="feels_like"
-                stroke="#64748b"
+                stroke="#cbd5e1"
                 strokeWidth={2}
                 dot={false}
                 strokeDasharray="5 5"

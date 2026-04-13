@@ -1,5 +1,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { Sunrise, Sunset, Compass, Gauge } from "lucide-react";
+import {
+  Sunrise,
+  Sunset,
+  Compass,
+  Gauge,
+  Cloud,
+  Eye,
+  Waves,
+  Mountain,
+} from "lucide-react";
 import { format } from "date-fns";
 import type { WeatherData } from "@/api/types";
 
@@ -8,7 +17,7 @@ interface WeatherDetailsProps {
 }
 
 export function WeatherDetails({ data }: WeatherDetailsProps) {
-  const { wind, main, sys } = data;
+  const { wind, main, sys, clouds, visibility } = data;
 
   // Format time using date-fns
   const formatTime = (timestamp: number) => {
@@ -48,19 +57,43 @@ export function WeatherDetails({ data }: WeatherDetailsProps) {
       icon: Gauge,
       color: "text-purple-500",
     },
+    {
+      title: "Cloud Cover",
+      value: `${clouds.all}%`,
+      icon: Cloud,
+      color: "text-cyan-500",
+    },
+    {
+      title: "Visibility",
+      value: `${(visibility / 1000).toFixed(1)} km`,
+      icon: Eye,
+      color: "text-emerald-500",
+    },
+    {
+      title: "Sea Level",
+      value: main.sea_level ? `${main.sea_level} hPa` : "N/A",
+      icon: Waves,
+      color: "text-indigo-500",
+    },
+    {
+      title: "Ground Level",
+      value: main.grnd_level ? `${main.grnd_level} hPa` : "N/A",
+      icon: Mountain,
+      color: "text-amber-500",
+    },
   ];
 
   return (
-    <Card>
+    <Card className="border-white/10 bg-white/5 backdrop-blur-xl">
       <CardHeader>
-        <CardTitle>Weather Details</CardTitle>
+        <CardTitle>Atmospheric Details</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2">
           {details.map((detail) => (
             <div
               key={detail.title}
-              className="flex items-center gap-3 rounded-lg border p-4"
+              className="flex items-center gap-3 rounded-xl border border-white/10 bg-black/20 p-4"
             >
               <detail.icon className={`h-5 w-5 ${detail.color}`} />
               <div>

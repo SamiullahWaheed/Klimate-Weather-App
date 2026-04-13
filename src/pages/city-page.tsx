@@ -37,10 +37,15 @@ export function CityPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">
-          {params.cityName}, {weatherQuery.data.sys.country}
-        </h1>
+      <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-5 py-4 backdrop-blur-xl">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">
+            {params.cityName}, {weatherQuery.data.sys.country}
+          </h1>
+          <p className="text-sm text-muted-foreground">
+            Deep-dive weather view for this city
+          </p>
+        </div>
         <div className="flex gap-2">
           <FavoriteButton
             data={{ ...weatherQuery.data, name: params.cityName }}
@@ -50,11 +55,11 @@ export function CityPage() {
 
       <div className="grid gap-6">
         <CurrentWeather data={weatherQuery.data} />
-        <HourlyTemperature data={forecastQuery.data} />
-        <div className="grid gap-6 md:grid-cols-2 items-start">
+        <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr] items-start">
+          <HourlyTemperature data={forecastQuery.data} />
           <WeatherDetails data={weatherQuery.data} />
-          <WeatherForecast data={forecastQuery.data} />
         </div>
+        <WeatherForecast data={forecastQuery.data} />
       </div>
     </div>
   );

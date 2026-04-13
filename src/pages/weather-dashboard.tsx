@@ -95,12 +95,17 @@ export function WeatherDashboard() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <FavoriteCities />
-      <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold tracking-tight">My Location</h1>
+      <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-5 py-4 backdrop-blur-xl">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight">My Weather Hub</h1>
+          <p className="text-sm text-muted-foreground">
+            Real-time insights for your current location
+          </p>
+        </div>
         <Button
-          variant="outline"
+          variant="secondary"
           size="icon"
           onClick={handleRefresh}
           disabled={weatherQuery.isFetching || forecastQuery.isFetching}
@@ -114,16 +119,14 @@ export function WeatherDashboard() {
       </div>
 
       <div className="grid gap-6">
-        <div className="flex flex-col lg:flex-row gap-4">
-          <CurrentWeather
-            data={weatherQuery.data}
-            locationName={locationName}
-          />
+        <CurrentWeather data={weatherQuery.data} locationName={locationName} />
+
+        <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr] items-start">
           <HourlyTemperature data={forecastQuery.data} />
+          <WeatherDetails data={weatherQuery.data} />
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 items-start">
-          <WeatherDetails data={weatherQuery.data} />
+        <div className="grid gap-6">
           <WeatherForecast data={forecastQuery.data} />
         </div>
       </div>
