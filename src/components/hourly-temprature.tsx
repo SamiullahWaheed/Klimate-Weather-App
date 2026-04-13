@@ -9,6 +9,16 @@ import {
 } from "recharts";
 import { format } from "date-fns";
 import type { ForecastData } from "@/api/types";
+import {
+  Cloud,
+  CloudDrizzle,
+  CloudFog,
+  CloudLightning,
+  CloudRain,
+  CloudSnow,
+  Sun,
+  SunMedium,
+} from "lucide-react";
 
 interface HourlyTemperatureProps {
   data: ForecastData;
@@ -18,6 +28,14 @@ interface ChartData {
   time: string;
   temp: number;
   feels_like: number;
+}
+
+interface DailyPreview {
+  date: number;
+  temp_min: number;
+  temp_max: number;
+  main: string;
+  description: string;
 }
 
 export function HourlyTemperature({ data }: HourlyTemperatureProps) {
@@ -30,6 +48,63 @@ export function HourlyTemperature({ data }: HourlyTemperatureProps) {
       temp: Math.round(item.main.temp),
       feels_like: Math.round(item.main.feels_like),
     }));
+
+  const getWeatherIcon = (main: string, description: string) => {
+    const normalizedMain = main.toLowerCase();
+    const normalizedDescription = description.toLowerCase();
+
+    if (normalizedMain.includes("thunder")) {
+      return <CloudLightning className="mx-auto h-8 w-8 text-violet-300" />;
+    }
+    if (normalizedMain.includes("drizzle")) {
+      return <CloudDrizzle className="mx-auto h-8 w-8 text-cyan-300" />;
+    }
+    if (normalizedMain.includes("rain")) {
+      return <CloudRain className="mx-auto h-8 w-8 text-blue-300" />;
+    }
+    if (normalizedMain.includes("snow")) {
+      return <CloudSnow className="mx-auto h-8 w-8 text-slate-200" />;
+    }
+    if (
+      normalizedMain.includes("mist") ||
+      normalizedMain.includes("fog") ||
+      normalizedMain.includes("haze") ||
+      normalizedDescription.includes("smoke")
+    ) {
+      return <CloudFog className="mx-auto h-8 w-8 text-slate-300" />;
+    }
+    if (normalizedMain.includes("cloud")) {
+      return <Cloud className="mx-auto h-8 w-8 text-slate-200" />;
+    }
+    if (normalizedMain.includes("clear")) {
+      return <Sun className="mx-auto h-8 w-8 text-amber-300" />;
+    }
+
+    return <SunMedium className="mx-auto h-8 w-8 text-amber-200" />;
+  };
+
+  const upcomingDays = Object.values(
+    data.list.reduce((acc, item) => {
+      const dateKey = format(new Date(item.dt * 1000), "yyyy-MM-dd");
+
+      if (!acc[dateKey]) {
+        acc[dateKey] = {
+          date: item.dt,
+          temp_min: item.main.temp_min,
+          temp_max: item.main.temp_max,
+          main: item.weather[0].main,
+          description: item.weather[0].description,
+        };
+      } else {
+        acc[dateKey].temp_min = Math.min(acc[dateKey].temp_min, item.main.temp_min);
+        acc[dateKey].temp_max = Math.max(acc[dateKey].temp_max, item.main.temp_max);
+      }
+
+      return acc;
+    }, {} as Record<string, DailyPreview>)
+  ).slice(0, 6);
+
+  const sevenDayCards = Array.from({ length: 6 }, (_, index) => upcomingDays[index]);
 
   return (
     <Card className="flex-1 border-white/10 bg-white/5 backdrop-blur-xl">
@@ -106,6 +181,46 @@ export function HourlyTemperature({ data }: HourlyTemperatureProps) {
               />
             </LineChart>
           </ResponsiveContainer>
+        </div>
+
+        <div className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-6">
+          {sevenDayCards.map((day, index) => {
+            const isToday = index === 0;
+
+            if (!day) {
+              return (
+                <div
+                  key={`placeholder-${index}`}
+                  className="rounded-2xl border border-dashed border-white/10 bg-black/10 p-3 text-center"
+                >
+                  <p className="text-sm font-medium text-muted-foreground">--</p>
+                  <Cloud className="mx-auto h-8 w-8 text-muted-foreground/70" />
+                  <p className="text-base font-semibold text-muted-foreground">--</p>
+                  <p className="text-sm text-muted-foreground">--</p>
+                </div>
+              );
+            }
+
+            return (
+              <div
+                key={day.date}
+                className={`rounded-2xl border p-3 text-center ${
+                  isToday
+                    ? "border-white/20 bg-white/10"
+                    : "border-white/10 bg-black/20"
+                }`}
+              >
+                <p className="text-sm font-medium">
+                  {format(new Date(day.date * 1000), "EEE")}
+                </p>
+                {getWeatherIcon(day.main, day.description)}
+                <p className="text-base font-semibold">{Math.round(day.temp_max)}°</p>
+                <p className="text-sm text-muted-foreground">
+                  {Math.round(day.temp_min)}°
+                </p>
+              </div>
+            );
+          })}
         </div>
       </CardContent>
     </Card>
