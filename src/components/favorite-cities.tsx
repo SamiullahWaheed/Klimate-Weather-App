@@ -32,7 +32,7 @@ function FavoriteCityTablet({
   return (
     <div
       onClick={handleClick}
-      className="relative flex min-w-[260px] cursor-pointer items-center gap-3 rounded-xl border border-white/10 bg-white/5 p-4 pr-8 shadow-sm backdrop-blur-xl transition-all hover:-translate-y-0.5 hover:bg-white/10"
+      className="relative flex min-w-[260px] cursor-pointer items-center gap-3 rounded-xl border border-border/70 bg-card/70 p-4 pr-8 shadow-sm backdrop-blur-xl transition-all hover:-translate-y-0.5 hover:bg-card dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10"
       role="button"
       tabIndex={0}
     >

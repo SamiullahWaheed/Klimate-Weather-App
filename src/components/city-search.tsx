@@ -46,7 +46,7 @@ export function CitySearch() {
     <>
       <Button
         variant="outline"
-        className="relative w-full justify-start border-white/20 bg-white/10 text-sm text-muted-foreground backdrop-blur-xl hover:bg-white/20 sm:pr-12 md:w-44 lg:w-72"
+        className="relative w-full justify-start border-border/80 bg-card/80 text-sm text-muted-foreground shadow-sm backdrop-blur-xl hover:bg-card sm:pr-12 md:w-44 lg:w-72 dark:border-white/20 dark:bg-white/10 dark:hover:bg-white/20"
         onClick={() => setOpen(true)}
       >
         <Search className="mr-2 h-4 w-4" />

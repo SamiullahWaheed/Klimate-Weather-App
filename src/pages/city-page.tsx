@@ -1,13 +1,15 @@
 import { useParams, useSearchParams } from "react-router-dom";
 import { useWeatherQuery, useForecastQuery } from "@/hooks/use-weather";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle, ArrowLeft, RefreshCw } from "lucide-react";
 import { CurrentWeather } from "../components/current-weather";
 import { HourlyTemperature } from "../components/hourly-temprature";
 import { WeatherDetails } from "../components/weather-details";
 import { WeatherForecast } from "../components/weather-forecast";
 import WeatherSkeleton from "../components/loading-skeleton";
 import { FavoriteButton } from "@/components/favorite-button";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 export function CityPage() {
   const [searchParams] = useSearchParams();
@@ -19,6 +21,10 @@ export function CityPage() {
 
   const weatherQuery = useWeatherQuery(coordinates);
   const forecastQuery = useForecastQuery(coordinates);
+  const handleRefresh = () => {
+    weatherQuery.refetch();
+    forecastQuery.refetch();
+  };
 
   if (weatherQuery.error || forecastQuery.error) {
     return (
@@ -37,8 +43,14 @@ export function CityPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-5 py-4 backdrop-blur-xl">
+      <div className="flex items-center justify-between rounded-2xl border border-border/70 bg-card/70 px-5 py-4 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-white/5">
         <div>
+          <Button asChild variant="ghost" className="mb-2 -ml-2">
+            <Link to="/">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to my location
+            </Link>
+          </Button>
           <h1 className="text-3xl font-bold tracking-tight">
             {params.cityName}, {weatherQuery.data.sys.country}
           </h1>
@@ -47,6 +59,20 @@ export function CityPage() {
           </p>
         </div>
         <div className="flex gap-2">
+          <Button
+            variant="secondary"
+            size="icon"
+            onClick={handleRefresh}
+            disabled={weatherQuery.isFetching || forecastQuery.isFetching}
+          >
+            <RefreshCw
+              className={`h-4 w-4 ${
+                weatherQuery.isFetching || forecastQuery.isFetching
+                  ? "animate-spin"
+                  : ""
+              }`}
+            />
+          </Button>
           <FavoriteButton
             data={{ ...weatherQuery.data, name: params.cityName }}
           />

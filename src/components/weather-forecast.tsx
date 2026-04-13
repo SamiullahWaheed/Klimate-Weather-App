@@ -56,7 +56,7 @@ export function WeatherForecast({ data }: WeatherForecastProps) {
   const formatTemp = (temp: number) => `${Math.round(temp)}°`;
 
   return (
-    <Card className="border-white/10 bg-white/5 backdrop-blur-xl">
+    <Card className="border-border/70 bg-card/70 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-white/5">
       <CardHeader>
         <CardTitle>5-Day Outlook</CardTitle>
       </CardHeader>
@@ -65,7 +65,7 @@ export function WeatherForecast({ data }: WeatherForecastProps) {
           {nextDays.map((day) => (
             <div
               key={day.date}
-              className="grid items-center gap-4 rounded-xl border border-white/10 bg-black/20 p-4 md:grid-cols-[1.5fr_1fr_1fr]"
+              className="grid items-center gap-4 rounded-xl border border-border/70 bg-card/60 p-4 dark:border-white/10 dark:bg-black/20 md:grid-cols-[1.5fr_1fr_1fr]"
             >
               <div>
                 <p className="font-medium text-base">

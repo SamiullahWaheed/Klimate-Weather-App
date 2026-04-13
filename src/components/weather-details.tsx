@@ -84,7 +84,7 @@ export function WeatherDetails({ data }: WeatherDetailsProps) {
   ];
 
   return (
-    <Card className="border-white/10 bg-white/5 backdrop-blur-xl">
+    <Card className="border-border/70 bg-card/70 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-white/5">
       <CardHeader>
         <CardTitle>Atmospheric Details</CardTitle>
       </CardHeader>
@@ -93,7 +93,7 @@ export function WeatherDetails({ data }: WeatherDetailsProps) {
           {details.map((detail) => (
             <div
               key={detail.title}
-              className="flex items-center gap-3 rounded-xl border border-white/10 bg-black/20 p-4"
+              className="flex items-center gap-3 rounded-xl border border-border/70 bg-card/60 p-4 dark:border-white/10 dark:bg-black/20"
             >
               <detail.icon className={`h-5 w-5 ${detail.color}`} />
               <div>

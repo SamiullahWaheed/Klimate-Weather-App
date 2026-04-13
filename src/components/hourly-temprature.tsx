@@ -102,12 +102,12 @@ export function HourlyTemperature({ data }: HourlyTemperatureProps) {
 
       return acc;
     }, {} as Record<string, DailyPreview>)
-  ).slice(0, 6);
+  ).slice(0, 7);
 
-  const sevenDayCards = Array.from({ length: 6 }, (_, index) => upcomingDays[index]);
+  const sevenDayCards = Array.from({ length: 7 }, (_, index) => upcomingDays[index]);
 
   return (
-    <Card className="flex-1 border-white/10 bg-white/5 backdrop-blur-xl">
+    <Card className="flex-1 border-border/70 bg-card/70 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-white/5">
       <CardHeader>
         <CardTitle>24-Hour Trend</CardTitle>
       </CardHeader>
@@ -183,7 +183,7 @@ export function HourlyTemperature({ data }: HourlyTemperatureProps) {
           </ResponsiveContainer>
         </div>
 
-        <div className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-6">
+        <div className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-7">
           {sevenDayCards.map((day, index) => {
             const isToday = index === 0;
 
@@ -191,7 +191,7 @@ export function HourlyTemperature({ data }: HourlyTemperatureProps) {
               return (
                 <div
                   key={`placeholder-${index}`}
-                  className="rounded-2xl border border-dashed border-white/10 bg-black/10 p-3 text-center"
+                  className="rounded-2xl border border-dashed border-border/70 bg-muted/40 p-3 text-center dark:border-white/10 dark:bg-black/10"
                 >
                   <p className="text-sm font-medium text-muted-foreground">--</p>
                   <Cloud className="mx-auto h-8 w-8 text-muted-foreground/70" />
@@ -206,8 +206,8 @@ export function HourlyTemperature({ data }: HourlyTemperatureProps) {
                 key={day.date}
                 className={`rounded-2xl border p-3 text-center ${
                   isToday
-                    ? "border-white/20 bg-white/10"
-                    : "border-white/10 bg-black/20"
+                    ? "border-sky-300/60 bg-sky-100/70 dark:border-white/20 dark:bg-white/10"
+                    : "border-border/70 bg-card/60 dark:border-white/10 dark:bg-black/20"
                 }`}
               >
                 <p className="text-sm font-medium">

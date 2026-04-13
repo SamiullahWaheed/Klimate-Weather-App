@@ -97,7 +97,7 @@ export function WeatherDashboard() {
   return (
     <div className="space-y-6">
       <FavoriteCities />
-      <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-5 py-4 backdrop-blur-xl">
+      <div className="flex items-center justify-between rounded-2xl border border-border/70 bg-card/70 px-5 py-4 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-white/5">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">My Weather Hub</h1>
           <p className="text-sm text-muted-foreground">

@@ -29,7 +29,7 @@ export function CurrentWeather({ data, locationName }: CurrentWeatherProps) {
   const formatTemp = (temp: number) => `${Math.round(temp)}°`;
 
   return (
-    <Card className="overflow-hidden border-white/10 bg-gradient-to-br from-indigo-500/30 via-sky-500/20 to-cyan-500/20 backdrop-blur-xl">
+    <Card className="overflow-hidden border-border/70 bg-gradient-to-br from-sky-100/80 via-indigo-100/70 to-cyan-100/80 shadow-sm backdrop-blur-xl dark:border-white/10 dark:from-indigo-500/30 dark:via-sky-500/20 dark:to-cyan-500/20">
       <CardContent className="p-6 md:p-8">
         <div className="flex flex-col gap-8">
           <div className="flex flex-wrap items-start justify-between gap-6">
@@ -48,12 +48,12 @@ export function CurrentWeather({ data, locationName }: CurrentWeatherProps) {
                   {format(new Date(data.dt * 1000), "EEEE, MMM d")}
                 </p>
               </div>
-              <div className="inline-flex rounded-full border border-white/15 bg-black/20 px-3 py-1 text-sm capitalize text-white/90">
+              <div className="inline-flex rounded-full border border-sky-300/60 bg-white/70 px-3 py-1 text-sm capitalize text-slate-700 dark:border-white/15 dark:bg-black/20 dark:text-white/90">
                 {currentWeather.description}
               </div>
             </div>
 
-            <div className="flex items-center gap-2 rounded-2xl border border-white/10 bg-black/20 px-4 py-2 text-sm text-white/90">
+            <div className="flex items-center gap-2 rounded-2xl border border-slate-200/80 bg-white/70 px-4 py-2 text-sm text-slate-700 dark:border-white/10 dark:bg-black/20 dark:text-white/90">
               <Eye className="h-4 w-4 text-cyan-300" />
               Visibility {(visibility / 1000).toFixed(1)} km
             </div>
@@ -83,27 +83,27 @@ export function CurrentWeather({ data, locationName }: CurrentWeatherProps) {
               </div>
 
               <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-4">
-                <div className="rounded-xl border border-white/10 bg-black/20 p-3">
+                <div className="rounded-xl border border-slate-200/80 bg-white/65 p-3 dark:border-white/10 dark:bg-black/20">
                   <p className="text-xs text-muted-foreground">Humidity</p>
                   <p className="mt-1 flex items-center gap-1 text-sm font-medium">
                     <Droplets className="h-4 w-4 text-cyan-300" />
                     {humidity}%
                   </p>
                 </div>
-                <div className="rounded-xl border border-white/10 bg-black/20 p-3">
+                <div className="rounded-xl border border-slate-200/80 bg-white/65 p-3 dark:border-white/10 dark:bg-black/20">
                   <p className="text-xs text-muted-foreground">Wind</p>
                   <p className="mt-1 flex items-center gap-1 text-sm font-medium">
                     <Wind className="h-4 w-4 text-cyan-300" />
                     {speed.toFixed(1)} m/s
                   </p>
                 </div>
-                <div className="rounded-xl border border-white/10 bg-black/20 p-3">
+                <div className="rounded-xl border border-slate-200/80 bg-white/65 p-3 dark:border-white/10 dark:bg-black/20">
                   <p className="text-xs text-muted-foreground">Wind Gust</p>
                   <p className="mt-1 text-sm font-medium">
                     {gust ? `${gust.toFixed(1)} m/s` : "N/A"}
                   </p>
                 </div>
-                <div className="rounded-xl border border-white/10 bg-black/20 p-3">
+                <div className="rounded-xl border border-slate-200/80 bg-white/65 p-3 dark:border-white/10 dark:bg-black/20">
                   <p className="text-xs text-muted-foreground">Pressure</p>
                   <p className="mt-1 flex items-center gap-1 text-sm font-medium">
                     <Gauge className="h-4 w-4 text-cyan-300" />
