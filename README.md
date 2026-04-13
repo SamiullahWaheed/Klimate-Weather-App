@@ -31,8 +31,8 @@ Klimate is a modern weather application built using React that provides real-tim
 
 ```bash
 git clone https://github.com/SamiullahWaheed/Klimate-Weather-App.git
-
-### Make sure to create a `.env` file with following variables -
 ```
+### Make sure to create a `.env` file with following variables -
+```bash
 VITE_OPENWEATHER_API_KEY=
 ```
