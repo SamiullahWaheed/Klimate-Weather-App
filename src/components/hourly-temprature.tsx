@@ -102,9 +102,9 @@ export function HourlyTemperature({ data }: HourlyTemperatureProps) {
 
       return acc;
     }, {} as Record<string, DailyPreview>)
-  ).slice(0, 7);
+  ).slice(0, 6); // Get next 6 days
 
-  const sevenDayCards = Array.from({ length: 7 }, (_, index) => upcomingDays[index]);
+  const sixDayCards = Array.from({ length: 6 }, (_, index) => upcomingDays[index]);
 
   return (
     <Card className="flex-1 border-border/70 bg-card/70 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-white/5">
@@ -183,8 +183,8 @@ export function HourlyTemperature({ data }: HourlyTemperatureProps) {
           </ResponsiveContainer>
         </div>
 
-        <div className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-7">
-          {sevenDayCards.map((day, index) => {
+        <div className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-6">
+          {sixDayCards.map((day, index) => {
             const isToday = index === 0;
 
             if (!day) {
